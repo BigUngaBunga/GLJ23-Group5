@@ -19,7 +19,9 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager SharedInstance;
 
     public List<GameObject> pooledEnemies;
-    [SerializeField] GameObject EnemyPrefab;
+    [SerializeField] GameObject NormalEnemyPrefab;
+    [SerializeField] GameObject SmallEnemyPrefab;
+    [SerializeField] GameObject BigEnemyPrefab;
     public int amountToPool;
 
     void Awake()
@@ -35,7 +37,19 @@ public class EnemyManager : MonoBehaviour
         GameObject tmp;
         for (int i = 0; i < amountToPool; i++)
         {
-            tmp = Instantiate(EnemyPrefab);
+            if (i % 20 == 19)
+            {
+                tmp = Instantiate(BigEnemyPrefab);
+            }
+            else if (i % 5 == 4)
+            {
+                tmp = Instantiate(SmallEnemyPrefab);
+            }
+            else
+            {
+                tmp = Instantiate(NormalEnemyPrefab);
+            }
+
             tmp.SetActive(false);
             pooledEnemies.Add(tmp);
             tmp.transform.SetParent(this.transform);
@@ -97,8 +111,12 @@ public class EnemyManager : MonoBehaviour
                 }
                 else
                 {
-                    timer = timeBetweenSpawns / 2;
+                    timer = timeBetweenSpawns / 4;
                 }
+            }
+            else
+            {
+                timer = timeBetweenSpawns;
             }
         }
     }
