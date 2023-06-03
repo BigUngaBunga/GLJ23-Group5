@@ -15,14 +15,16 @@ public class PlayerSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject Player1 = Instantiate(Player1Prefab, Player1Spawner.transform);
-        PlayerInput player1 = PlayerInput.Instantiate(Player1, controlScheme: "player1", pairWithDevice: Keyboard.current);
+     
+        PlayerInput player1 = PlayerInput.Instantiate(Player1Prefab, controlScheme: "player1", pairWithDevice: Keyboard.current);
+        player1.transform.position = Player1Spawner.transform.position;
         //if (PlayerPrefs.GetFloat("Players")==2)
-        //{
-            GameObject Player2 = Instantiate(Player2Prefab, Player2Spawner.transform);
-            PlayerInput player2 = PlayerInput.Instantiate(Player2, controlScheme: "Player2", pairWithDevice: Keyboard.current);
+      
+            PlayerInput player2 = PlayerInput.Instantiate(Player2Prefab, controlScheme: "Player2", pairWithDevice: Keyboard.current);
+        player2.transform.position=Player2Spawner.transform.position;
+        
         //}
-    
+
     }
 
    

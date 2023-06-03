@@ -7,16 +7,24 @@ public class PlayerShoot : PlayersAction
     // Start is called before the first frame update
     // Update is called once per frame
     [SerializeField] GameObject bullet;
+    [SerializeField] GameObject muzzle;
    
 
     public override IEnumerator Attack(float attackSpeed)
     {
-        controller.rb.velocity = Vector2.zero;
+        
         canAttack = false;
         while (!canAttack)
         {
-            Instantiate(bullet, transform.position, Quaternion.LookRotation(transform.forward, transform.up));
+            controller.rb.velocity = Vector2.zero;
+
+            float spread = Random.Range(-0.13f,0.13f);
+            Debug.Log("SHooting");
+            Instantiate(bullet, muzzle.transform.position, Quaternion.LookRotation(transform.forward, transform.up + new Vector3( spread,spread,spread)));
+            hasAttacked = true;
             yield return new WaitForSeconds(attackSpeed);
+
+           
         }
 
     }
