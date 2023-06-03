@@ -8,8 +8,15 @@ public class PlayerMelee : PlayersAction
     // Update is called once per frame
     public override IEnumerator Attack(float attackSpeed)
     {
-        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-        yield return  new WaitForSeconds(attackSpeed);
-        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        if (canAttack)
+        {
+            canAttack = false;
+            controller.rb.velocity*=5;
+            yield return new WaitForSeconds(0.2f);
+            controller.isAttacking = false;
+            StopCoroutine(Attack(attackSpeed));
+        }
+        yield break;
+        
     }
 }

@@ -225,7 +225,7 @@
                     "name": "",
                     "id": "f4215fdc-8654-4252-b1c5-38d4e56905cd",
                     "path": "<Keyboard>/numpad2",
-                    "interactions": "Press",
+                    "interactions": "Hold,Press(behavior=2)",
                     "processors": "",
                     "groups": "Player2",
                     "action": "Attack",

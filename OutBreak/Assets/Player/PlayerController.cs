@@ -1,20 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    Vector2 move;
+    public Vector2 move;
+    [SerializeField] Camera followCam;
     [SerializeField] float playerSpeed;
-    private Rigidbody2D rb;
-    private bool isAttacking;
-    [SerializeField] float attackSpeed;
+    public  Rigidbody2D rb;
+    public  bool isAttacking;
+    [SerializeField] public float attackDelay;
+
+    [SerializeField] public float attackSpeed;
     [SerializeField] PlayersAction attackAction;
     // Start is called before the first frame update
     void Start()
     {
         rb= GetComponent<Rigidbody2D>();
+
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -25,20 +30,40 @@ public class PlayerController : MonoBehaviour
     }
     public void OnPlayerAttack(InputAction.CallbackContext context)
     {
-        Debug.Log("Attackinng");
+        if(context.started) {
+            Debug.Log("start shooting");
+            isAttacking = true;
 
-       isAttacking = context.action.triggered;
-
+        }
+         if (context.canceled)
+        {
+        Debug.Log("Stop Attackinng");
+           StartCoroutine(attackAction.WaitAttack(attackDelay));
+           isAttacking= false;
+        }
     }
  
-    public void Update()
+    public void FixedUpdate()
     {
-        rb.velocity = new Vector2(move.x, move.y) * playerSpeed * Time.deltaTime;
-        if(isAttacking)
+        if(!isAttacking)
         {
+
+        rb.velocity = new Vector2(move.x, move.y) * playerSpeed * Time.fixedDeltaTime;
+        }
+        if (isAttacking && attackAction.canAttack)
+        {
+           
             StartCoroutine(attackAction.Attack(attackSpeed));
         }
-    
-  
+
+        if (move != Vector2.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, move);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 5);
+        }
+            followCam.transform.localRotation = Quaternion.Inverse(gameObject.transform.rotation);
+        
+
+
     }
 }
