@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     {
         if(!isAttacking)
         {
-         rb.velocity = new Vector2(move.x, move.y) * playerSpeed * Time.fixedDeltaTime;
+            rb.velocity = new Vector2(move.x, move.y) * playerSpeed * Time.fixedDeltaTime;
         }
         if (isAttacking && !attackAction.hasAttacked)
         {
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
             Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, move);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 5);
         }
-            followCam.transform.localRotation = Quaternion.Inverse(gameObject.transform.rotation);  
+        followCam.transform.localRotation = Quaternion.Inverse(gameObject.transform.rotation);  
     }
     public void TakeDamage(int dmg)
     {

@@ -170,28 +170,28 @@ Tilemap:
     m_Data:
       e00: 0
       e01: 0
-      e02: 0
-      e03: 7.553736e-21
+      e02: 2.5749843e-19
+      e03: 2.5749843e-19
       e10: 0
       e11: 0
-      e12: 0
-      e13: 1.08e-43
-      e20: 0
-      e21: 0
-      e22: 0
-      e23: 0
-      e30: 0
+      e12: 8.09e-43
+      e13: 8.09e-43
+      e20: -8.5287127e+36
+      e21: 1e-45
+      e22: -2.1123308e-19
+      e23: -2.0501404
+      e30: 4.5905e-41
       e31: 0
-      e32: 0
-      e33: 0
+      e32: 8.09e-43
+      e33: 8.11e-43
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
+    m_Data: {r: 4.1633e-41, g: 4.1633e-41, b: 4.1633e-41, a: 4.1633e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -4, y: -5, z: 0}
-  m_Size: {x: 13, y: 7, z: 1}
+  m_Origin: {x: -15, y: -10, z: 0}
+  m_Size: {x: 24, y: 12, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -284,7 +284,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1248092490254529032}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
