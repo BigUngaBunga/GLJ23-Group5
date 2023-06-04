@@ -13,7 +13,7 @@ public class TargetIndicator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(gameObject.tag=="Player1")
+        if(gameObject.tag=="Player1" && PlayerPrefs.GetInt("Players") > 1)
         {
             target = GameObject.FindGameObjectWithTag("Player2");
 
@@ -27,7 +27,7 @@ public class TargetIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isIndicatorActive)
+        if(isIndicatorActive && target != null)
         {
             Vector3 targetDirect = target.transform.position - transform.position;
             distanceToTarget = targetDirect.magnitude;
