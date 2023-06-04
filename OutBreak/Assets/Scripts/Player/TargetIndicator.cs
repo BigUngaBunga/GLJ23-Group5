@@ -22,12 +22,17 @@ public class TargetIndicator : MonoBehaviour
         {
             target = GameObject.FindGameObjectWithTag("Player1");
         }
+        if(target==null)
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isIndicatorActive)
+     
+        if (isIndicatorActive)
         {
             Vector3 targetDirect = target.transform.position - transform.position;
             distanceToTarget = targetDirect.magnitude;

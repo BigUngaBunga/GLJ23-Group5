@@ -18,6 +18,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private int attackDamage = 1;
     private float latestHit;
     private int currentHealth;
+    bool isTakingDamage;
 
     private bool CanHit => latestHit + attackSpeed < Time.time;
 
@@ -41,10 +42,23 @@ public class EnemyScript : MonoBehaviour
     public void TakeDamage(int damage) => TakeDamage(damage, Vector2.zero);
     public void TakeDamage(int damage, Vector2 knockbackForce)
     {
+        isTakingDamage= true;
+        
+        currentHealth -= damage;
+        if (gameObject.activeInHierarchy == true)
+        {
+            StartCoroutine(KnockBack(knockbackForce));
+        }
         if ((currentHealth -= damage) <= 0)
             Die();
+       
     }
-
+    public IEnumerator KnockBack(Vector2 force)
+    {
+        rigidbody.AddForce(force, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.5f);
+        isTakingDamage= false;
+    }
 
     private void Die()
     {
@@ -104,7 +118,10 @@ public class EnemyScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidbody.velocity = direction * speed * Time.fixedDeltaTime;
+        if (!isTakingDamage)
+        {
+            rigidbody.velocity = direction * speed * Time.fixedDeltaTime;
+        }
         if (direction != Vector2.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
