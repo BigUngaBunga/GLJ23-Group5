@@ -39,10 +39,14 @@ public class PlayerMelee : PlayersAction
             gameObject.GetComponent<PlayerController>().followCam.transform.localRotation = Quaternion.Inverse(gameObject.transform.rotation);
             yield return new WaitForSeconds(0.01f); 
         }
-        Debug.Log("StopAttack");
-        gameObject.GetComponent<PlayerController>().isAttacking = false;
-        hasAttacked= false;   
-        isComboAttack= false;
-        StartCoroutine(WaitAttack(0.5f));
+        if(t>=rotationDuration)
+        {
+            Debug.Log("StopAttack");
+            gameObject.GetComponent<PlayerController>().isAttacking = false;
+            hasAttacked = false;
+            isComboAttack = false;
+            StartCoroutine(WaitAttack(0.5f));
+        }
+       
     }
 }

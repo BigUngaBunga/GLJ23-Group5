@@ -27,11 +27,11 @@ public class MeleeWeaponScript : MonoBehaviour
                     //enemies hit with comboattack
                 }
             }
-            else if (playerController.rb.velocity.magnitude > 20)
+            else if (playerController.rb.velocity.magnitude > 12)
             {
                 if (collision.tag == "Zombie")
                 {
-                    playerController.comboTracker.GetComponent<ComboManager>().AddCombo();
+                    playerController.comboTracker.GetComponent<ComboManager>().AddCombo(8);
 
                     collision.GetComponent<EnemyScript>().TakeDamage(damage);
                 }
@@ -44,16 +44,24 @@ public class MeleeWeaponScript : MonoBehaviour
         {
             if (playerController.gameObject.GetComponent<PlayerMelee>().isComboAttack)
             {
-               
+
                 if (collision.tag == "Zombie")
                 {
                     Debug.Log("ComboMelee");
 
-                    collision.GetComponent<EnemyScript>().TakeDamage(100,Vector2.zero);
+                    collision.GetComponent<EnemyScript>().TakeDamage(100, Vector2.zero);
                     //enemies hit with comboattack
                 }
             }
-           
+            else if (playerController.rb.velocity.magnitude > 12)
+            {
+                if (collision.tag == "Zombie")
+                {
+                    playerController.comboTracker.GetComponent<ComboManager>().AddCombo(8);
+
+                    collision.GetComponent<EnemyScript>().TakeDamage(damage);
+                }
+            }
         }
     }
 }

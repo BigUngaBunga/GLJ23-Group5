@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour
     private float startTime;
     private float removedTime = 0;
     private Timer timer;
-    public void RemoveTime(int time) => removedTime -= time;
+    public void RemoveTime(float time) => removedTime -= time;
     
     private void Start()
     {
@@ -33,5 +33,5 @@ public class LevelManager : MonoBehaviour
         float elapsedTime = Time.time - startTime + removedTime;
         return levelDuration - elapsedTime;
     }
-
+ 
 }

@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 move;
     [SerializeField] int maxHealth;
     int health;
-   
+    [SerializeField] GameObject corpse;
     [SerializeField] public Camera followCam;
     [SerializeField] public TargetIndicator targetIndicator;
     [SerializeField] float playerSpeed;
@@ -98,7 +98,11 @@ public class PlayerController : MonoBehaviour
         healthBar.fillAmount = health / maxHealth;
         if(health <= 0)
         {
-            //death
+            Destroy(gameObject.GetComponent<PlayerInput>());
+            Destroy(gameObject.GetComponent<SpriteRenderer>());
+            targetIndicator.enabled= false;
+            Instantiate(corpse,transform.position, Quaternion.identity);
+            Destroy(this);
         }
 
     }

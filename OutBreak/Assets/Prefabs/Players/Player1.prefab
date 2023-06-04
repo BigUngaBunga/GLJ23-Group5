@@ -273,6 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   maxHealth: 100
+  corpse: {fileID: 7759049795535867885, guid: 088239182336a364b9f2aa369d818804, type: 3}
   followCam: {fileID: 7597053710197900605}
   targetIndicator: {fileID: 477947239830744125}
   playerSpeed: 250

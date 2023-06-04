@@ -62,6 +62,7 @@ public class EnemyScript : MonoBehaviour
 
     private void Die()
     {
+        GameObject.Find("LevelManager").GetComponent<LevelManager>().RemoveTime(0.5f);
         gameObject.SetActive(false);
         CancelInvoke();
 
@@ -72,13 +73,14 @@ public class EnemyScript : MonoBehaviour
         InvokeRepeating(nameof(UpdateClosestPlayer), 0f, 1f);
 
         direction = (targets[closestIndex].position - transform.position).normalized;
-
+        
         if (playersInRange.Count > 0 && CanHit)
             AttackClosest();
     }
 
     private void UpdateClosestPlayer()
     {
+        
         if (targets.Count > 1)
         {
             float closestRange = float.MaxValue;
@@ -100,6 +102,7 @@ public class EnemyScript : MonoBehaviour
 
     private void AttackClosest()
     {
+
         float closestRange = float.MaxValue;
         int closestIndex = 0;
         for (int i = 0; i < playersInRange.Count; i++)
@@ -111,7 +114,7 @@ public class EnemyScript : MonoBehaviour
                 closestIndex = i;
             }
         }
-        Debug.Log("Dealing Damage");
+
         playersInRange[closestIndex].TakeDamage(attackDamage);
         latestHit = Time.time;
     }
