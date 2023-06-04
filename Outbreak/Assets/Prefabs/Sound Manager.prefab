@@ -50,6 +50,7 @@ MonoBehaviour:
   musicSource: {fileID: 351758154916860808}
   effectSource: {fileID: 351758154972909100}
   voiceSource: {fileID: 2828509986327148876}
+  jingle: {fileID: 8300000, guid: 26491093a03e4fe4098b3ca05c0b019e, type: 3}
   allMusic:
   - {fileID: 8300000, guid: 51cbf6f2badf23144a2972bf1c9c6e0c, type: 3}
   - {fileID: 8300000, guid: ed9925ff271c6864a912d47f6df07045, type: 3}
