@@ -142,3 +142,4 @@ MonoBehaviour:
   originalHealth: 10
   attackSpeed: 0.5
   attackDamage: 1
+  bloodSplatter: {fileID: 8524837901036097826, guid: 26d926ca25ac8694eb6b906d992bd4b1, type: 3}
