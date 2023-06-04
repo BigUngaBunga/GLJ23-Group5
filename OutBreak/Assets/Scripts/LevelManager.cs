@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
     
     private void Start()
     {
+        SoundManager.instance.StartLevel(SceneManager.GetActiveScene().buildIndex);
         levelScore = 0;
         timer = FindObjectOfType<GameTimer>();
         startTime = Time.time;
@@ -31,6 +32,7 @@ public class LevelManager : MonoBehaviour
 
     private void EndLevel()
     {
+        SoundManager.instance.PlayJingle();
         levelScore += (int)(levelDuration - ElapsedTime) * scoreFactor;
         HighScoreList.score += levelScore;
         loadingLevel = true;
