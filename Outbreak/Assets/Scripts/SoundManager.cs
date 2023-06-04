@@ -30,7 +30,7 @@ public class SoundManager : MonoBehaviour
         }
 
         musicSource.loop = true;
-        StartLevel(1);
+        //StartLevel(1);
 
         //Dialogue 1 - Music 2
         //Dialogue 2 - Music 1
