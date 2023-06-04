@@ -31,42 +31,13 @@ SpriteAtlas:
       enableAlphaDilation: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1
-    packables:
-    - {fileID: 2800000, guid: 565044a52a8939c4cbb719166d31831e, type: 3}
-    - {fileID: 2800000, guid: 74f73c5180d40cf4397a62cd3c8ad356, type: 3}
-    - {fileID: 2800000, guid: 1e7fb6e08dd6fd641a5b7e9a7145b8ed, type: 3}
+    packables: []
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites:
-  - {fileID: -451286087, guid: 1e7fb6e08dd6fd641a5b7e9a7145b8ed, type: 3}
-  - {fileID: -1589321985, guid: 1e7fb6e08dd6fd641a5b7e9a7145b8ed, type: 3}
-  - {fileID: 288630191, guid: 1e7fb6e08dd6fd641a5b7e9a7145b8ed, type: 3}
-  - {fileID: -781339905, guid: 1e7fb6e08dd6fd641a5b7e9a7145b8ed, type: 3}
-  - {fileID: -1234708380, guid: 1e7fb6e08dd6fd641a5b7e9a7145b8ed, type: 3}
-  - {fileID: 87557293, guid: 1e7fb6e08dd6fd641a5b7e9a7145b8ed, type: 3}
-  - {fileID: -549505755, guid: 74f73c5180d40cf4397a62cd3c8ad356, type: 3}
-  - {fileID: 1015528352, guid: 74f73c5180d40cf4397a62cd3c8ad356, type: 3}
-  - {fileID: 332289134, guid: 74f73c5180d40cf4397a62cd3c8ad356, type: 3}
-  - {fileID: -150435188, guid: 74f73c5180d40cf4397a62cd3c8ad356, type: 3}
-  - {fileID: -1964929723, guid: 74f73c5180d40cf4397a62cd3c8ad356, type: 3}
-  - {fileID: -772331237, guid: 74f73c5180d40cf4397a62cd3c8ad356, type: 3}
-  - {fileID: 21300000, guid: 565044a52a8939c4cbb719166d31831e, type: 3}
-  m_PackedSpriteNamesToIndex:
-  - Fruitboxes_3
-  - Fruitboxes_2
-  - Fruitboxes_1
-  - Fruitboxes_0
-  - Fruitboxes_5
-  - Fruitboxes_4
-  - countertopTiles_0
-  - countertopTiles_1
-  - countertopTiles_2
-  - countertopTiles_3
-  - countertopTiles_4
-  - countertopTiles_5
-  - Black
+  m_PackedSprites: []
+  m_PackedSpriteNamesToIndex: []
   m_RenderDataMap: {}
   m_Tag: New Sprite Atlas
   m_IsVariant: 0
