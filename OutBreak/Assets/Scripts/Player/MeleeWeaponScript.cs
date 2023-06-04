@@ -22,7 +22,7 @@ public class MeleeWeaponScript : MonoBehaviour
                 if (collision.tag == "Zombie")
                 {
                     Debug.Log("ComboMelee");
-
+                    LevelManager.levelScore += 1;
                     collision.GetComponent<EnemyScript>().TakeDamage(100,Vector2.zero);
                     //enemies hit with comboattack
                 }
@@ -48,7 +48,7 @@ public class MeleeWeaponScript : MonoBehaviour
                 if (collision.tag == "Zombie")
                 {
                     Debug.Log("ComboMelee");
-
+                    LevelManager.levelScore += 1;
                     collision.GetComponent<EnemyScript>().TakeDamage(100,Vector2.zero);
                     //enemies hit with comboattack
                 }

@@ -130,7 +130,7 @@ public class EnemyScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("Player1") || collision.gameObject.tag.Equals("Player2"))
+        if (collision.CompareTag("Player1") || collision.CompareTag("Player2"))
             playersInRange.Add(collision.GetComponent<PlayerController>());
 
     }
