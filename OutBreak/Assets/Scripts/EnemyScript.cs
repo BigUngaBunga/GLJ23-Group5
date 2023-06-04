@@ -26,6 +26,7 @@ public class EnemyScript : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         latestHit= Time.time;
+        playersInRange= new List<PlayerController>();
     }
 
     public void Instantiate(Vector3 startPos, List<Transform> targets)

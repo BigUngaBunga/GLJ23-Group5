@@ -28,6 +28,7 @@ public class EnemyManager : MonoBehaviour
     {
         SharedInstance = this;
         timer = timeBetweenSpawns;
+        players = new List<Transform>();
     }
 
     void Start()
