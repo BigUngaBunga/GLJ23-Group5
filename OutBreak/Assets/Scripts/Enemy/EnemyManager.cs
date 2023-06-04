@@ -8,116 +8,103 @@ public class EnemyManager : MonoBehaviour
 {
 
     [SerializeField] List<Transform> spawnLocations;
-    
+    public  List<Transform> players;
+
     [SerializeField] float timeBetweenSpawns;
-    [SerializeField] float timeBetweenWaves;
-    float timeBetweenSpawnsInWave;
-    float spawnTimer, waveTimer;
+    float timer;
 
     /// <summary>
     /// Can be used to spawn enemies from other scripts.
     /// </summary>
     public static EnemyManager SharedInstance;
 
+    public List<GameObject> pooledEnemies;
     [SerializeField] GameObject NormalEnemyPrefab;
     [SerializeField] GameObject SmallEnemyPrefab;
-    [SerializeField] GameObject LargeEnemyPrefab;
-
-    int wave, currentSpawn, numOfSpawnsInWave;
-    [SerializeField] int startLargeSpawnIntervall = 10, startSmallSpawnIntervall=8;
-    bool spawnWave;
-    Transform waveSpawnLocation;
+    [SerializeField] GameObject BigEnemyPrefab;
+    [SerializeField] int amountToPool;
 
     void Awake()
     {
-        Physics2D.IgnoreLayerCollision(6, 7);
-        Physics2D.IgnoreLayerCollision(6, 8);
-
         SharedInstance = this;
-        timeBetweenSpawnsInWave = 0.05f;
+        timer = timeBetweenSpawns;
+        players = new List<Transform>();
     }
 
     void Start()
     {
-        numOfSpawnsInWave = 3;
-        NewWave();
-    }
-
-    public void NewWave()
-    {
-        if (wave % 2 == 1)
+        GetPlayers();
+        pooledEnemies = new List<GameObject>();
+        GameObject tmp;
+        for (int i = 0; i < amountToPool; i++)
         {
-            if (startLargeSpawnIntervall > 5)
-                startLargeSpawnIntervall--;
+            if (i % 20 == 19)
+            {
+                tmp = Instantiate(BigEnemyPrefab);
+            }
+            else if (i % 5 == 4)
+            {
+                tmp = Instantiate(SmallEnemyPrefab);
+            }
+            else
+            {
+                tmp = Instantiate(NormalEnemyPrefab);
+            }
 
-            if (startSmallSpawnIntervall > 3)
-                startSmallSpawnIntervall--;
+            tmp.SetActive(false);
+            pooledEnemies.Add(tmp);
+            tmp.transform.SetParent(transform);
         }
-
-        wave++;
-        numOfSpawnsInWave += 2;
-        currentSpawn = 0;
-
-        waveSpawnLocation = spawnLocations[Random.Range(0, spawnLocations.Count)];
-
-        spawnWave = true;
-        spawnTimer = 0;
-        waveTimer = timeBetweenWaves;
     }
-    
+
+    private void GetPlayers()
+    {
+        var playerControllers = FindObjectsOfType<PlayerController>();
+        foreach (var playerController in playerControllers)
+        {
+            if (playerController.transform)
+            {
+                players.Add(playerController.transform);
+
+            }
+        }
+            
+    }
+
+    /// <summary>
+    /// Called to return an enemy to spawn. No that the enemy script's Instanciate method has to be called as well 
+    /// </summary>
+    /// <returns></returns>
+    public GameObject GetPooledObject()
+    {
+        for (int i = 0; i < amountToPool; i++)
+        {
+            if (!pooledEnemies[i].activeInHierarchy)
+            {
+                return pooledEnemies[i];
+            }
+        }
+        return null;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        spawnTimer -= Time.deltaTime;
+        timer -= Time.deltaTime;
 
-        if (spawnWave)
+        if (timer <= 0)
         {
-            if (spawnTimer <= 0)
+            GameObject enemy = GetPooledObject();
+            if (enemy != null)
             {
-                currentSpawn++;
-                GameObject enemy;
-
-                if (currentSpawn % startLargeSpawnIntervall == 0)
-                {
-                    enemy = Instantiate(LargeEnemyPrefab);
-                }
-                else if (currentSpawn % startSmallSpawnIntervall == 0)
-                {
-                    enemy = Instantiate(SmallEnemyPrefab);
-                }
-                else
-                {
-                    enemy = Instantiate(NormalEnemyPrefab);
-                }
-                
                 EnemyScript script = enemy.GetComponent<EnemyScript>();
-                script.Initiate(waveSpawnLocation.position);
-                spawnTimer = timeBetweenSpawnsInWave;
-
-                if(currentSpawn>=numOfSpawnsInWave)
-                {
-                    spawnWave = false;
-                    spawnTimer = timeBetweenSpawns;
-                }
+                script.Instantiate(spawnLocations[Random.Range(0, spawnLocations.Count)].position, players);
+                timer = timeBetweenSpawns;
+            }
+            else
+            {
+                timer = timeBetweenSpawns;
             }
         }
-        else
-        {
-            if (spawnTimer <= 0)
-            {
-                GameObject enemy = Instantiate(NormalEnemyPrefab);
-                
-                EnemyScript script = enemy.GetComponent<EnemyScript>();
-                script.Initiate(spawnLocations[Random.Range(0, spawnLocations.Count)].position);
-                spawnTimer = timeBetweenSpawns;
-            }
-
-            waveTimer -= Time.deltaTime;
-            if (waveTimer <= 0)
-            {
-                NewWave();
-            }
-        }        
     }
 }

@@ -1,22 +1,16 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] float levelDuration = 60;
-    [SerializeField] int scoreFactor = 5;
     private float startTime;
     private float removedTime = 0;
-    private GameTimer timer;
-    private bool loadingLevel = false;
-    private float ElapsedTime => Time.time - startTime + removedTime;
-    public static int levelScore;
-    public void RemoveTime(int time) => removedTime -= time;
+    private Timer timer;
+    public void RemoveTime(float time) => removedTime -= time;
     
     private void Start()
     {
-        levelScore = 0;
-        timer = FindObjectOfType<GameTimer>();
+        timer = FindObjectOfType<Timer>();
         startTime = Time.time;
     }
 
@@ -24,24 +18,20 @@ public class LevelManager : MonoBehaviour
     {
         float timeLeft = TimeLeft();
         timer.SetTime(timeLeft);
-        if (timeLeft <= 0 && !loadingLevel)
+        if (timeLeft <= 0)
             EndLevel();
         
     }
 
     private void EndLevel()
     {
-        levelScore += (int)(levelDuration - ElapsedTime) * scoreFactor;
-        HighScoreList.score += levelScore;
-        loadingLevel = true;
-        LoadNextLevel();
-    }
 
-    private void LoadNextLevel() => SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+    }
 
     private float TimeLeft()
     {
-        return levelDuration - ElapsedTime;
+        float elapsedTime = Time.time - startTime + removedTime;
+        return levelDuration - elapsedTime;
     }
-
+ 
 }
