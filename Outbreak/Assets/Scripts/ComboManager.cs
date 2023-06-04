@@ -16,6 +16,7 @@ public class ComboManager : MonoBehaviour
     [SerializeField] float comboDecreaseCooldown;
     [SerializeField] float comboDecreaseAmount;
     [SerializeField] Image comboBar;
+    [SerializeField] AudioClip clip;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class ComboManager : MonoBehaviour
             instance = this;
 
         baseColor = comboBar.color;
+        SoundManager.instance.PlaySound(clip);
     }
 
     public void AddCombo(float someCombo)
@@ -35,6 +37,7 @@ public class ComboManager : MonoBehaviour
         {
             combo = maxCombo;
             isFull = true;
+            SoundManager.instance.PlaySound(clip);
         }
     }
 
