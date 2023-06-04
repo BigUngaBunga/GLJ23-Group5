@@ -20,9 +20,7 @@ public class ComboManager : MonoBehaviour
 
     private void Awake()
     {
-     
         baseColor = comboBar.color;
-        SoundManager.instance.PlaySound(clip);
     }
 
     public void AddCombo()
