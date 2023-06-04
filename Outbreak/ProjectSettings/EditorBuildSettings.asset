@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Textures/City Pack/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/MainMenu.unity
+    guid: 81aa1033cdf05e64eb7cd56bb4670865
+  - enabled: 1
+    path: Assets/Scenes/Levels/Store.unity
+    guid: 1cd569269e0dff74ebfc754cf67e12bb
+  - enabled: 1
+    path: Assets/Scenes/Levels/ParkingLot.unity
+    guid: 9d6bd015884210c45ab49da2670fd806
+  - enabled: 1
+    path: Assets/Scenes/Levels/Beach.unity
+    guid: efd0a34c5f631b24dada46bff3fa7a95
   m_configObjects: {}
