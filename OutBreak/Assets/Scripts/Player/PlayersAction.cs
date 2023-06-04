@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayersAction : MonoBehaviour
 {
-    public bool isComboAttack;
     public bool canAttack = true;
     // Start is called before the first frame update
     protected PlayerController controller;
@@ -15,10 +14,6 @@ public class PlayersAction : MonoBehaviour
         controller = gameObject.GetComponent<PlayerController>();
     }
     public virtual IEnumerator Attack(float attackSpeed)
-    {
-        return null;
-    }
-    public virtual IEnumerator ComboAttack()
     {
         return null;
     }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerShoot : PlayersAction
@@ -8,7 +7,6 @@ public class PlayerShoot : PlayersAction
     // Start is called before the first frame update
     // Update is called once per frame
     [SerializeField] GameObject bullet;
-    [SerializeField] GameObject comboBullet;
     [SerializeField] GameObject muzzle;
    
 
@@ -29,13 +27,6 @@ public class PlayerShoot : PlayersAction
            
         }
 
-    }
-    public override IEnumerator ComboAttack()
-    {
-        canAttack = false;
-        Instantiate(comboBullet, muzzle.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
-        hasAttacked = true;
-        yield return null;
     }
 
     //public bool CanShoot()
