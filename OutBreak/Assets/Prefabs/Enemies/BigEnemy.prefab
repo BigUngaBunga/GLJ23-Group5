@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9206096229489710746}
   m_Layer: 0
   m_Name: BigEnemy
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6d510efd9809b0d40bff581a1feaa0cb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  targets: []
+  direction: {x: 0, y: 0}
   originalHealth: 2
   attackSpeed: 0.5
   attackDamage: 1

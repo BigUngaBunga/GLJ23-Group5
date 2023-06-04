@@ -7,6 +7,7 @@ TagManager:
   - Player2
   - Player1
   - Obstacle
+  - Zombie
   layers:
   - Default
   - TransparentFX

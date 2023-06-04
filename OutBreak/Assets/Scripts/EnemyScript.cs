@@ -38,11 +38,13 @@ public class EnemyScript : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public void TakeDamage(int damage) => TakeDamage(damage, Vector2.zero);
     public void TakeDamage(int damage, Vector2 knockbackForce)
     {
         if ((currentHealth -= damage) <= 0)
             Die();
     }
+
 
     private void Die()
     {
