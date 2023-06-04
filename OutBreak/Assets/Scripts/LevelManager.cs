@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour
     private bool loadingLevel = false;
     private float ElapsedTime => Time.time - startTime + removedTime;
     public static int levelScore;
-    public void RemoveTime(int time) => removedTime -= time;
+    public void RemoveTime(float time) => removedTime -= time;
     
     private void Start()
     {

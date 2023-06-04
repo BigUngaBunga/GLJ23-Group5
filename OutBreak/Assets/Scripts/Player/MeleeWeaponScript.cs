@@ -31,7 +31,7 @@ public class MeleeWeaponScript : MonoBehaviour
             {
                 if (collision.tag == "Zombie")
                 {
-                    playerController.comboTracker.GetComponent<ComboManager>().AddCombo();
+                    playerController.comboTracker.GetComponent<ComboManager>().AddCombo(1);
 
                     collision.GetComponent<EnemyScript>().TakeDamage(damage);
                 }
