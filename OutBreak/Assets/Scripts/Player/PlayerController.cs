@@ -7,8 +7,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 move;
     [SerializeField] int maxHealth;
     int health;
-    [SerializeField] int maxComboPoints;
-    int comboPoints;
+   
     [SerializeField] public Camera followCam;
     [SerializeField] public TargetIndicator targetIndicator;
     [SerializeField] float playerSpeed;
@@ -27,7 +26,16 @@ public class PlayerController : MonoBehaviour
     {
         rb= GetComponent<Rigidbody2D>();
         health = maxHealth;
-        comboPoints = 100;
+        if(gameObject.name == "Player1(Clone)")
+        {
+            healthBar = GameObject.FindGameObjectWithTag("HP1").GetComponent<Image>();
+            comboTracker = GameObject.FindGameObjectWithTag("Combo1").GetComponent<Image>();
+        }
+        else if (gameObject.name == "Player2(Clone)")
+        {
+            healthBar = GameObject.FindGameObjectWithTag("HP2").GetComponent<Image>();
+            comboTracker = GameObject.FindGameObjectWithTag("Combo2").GetComponent<Image>();
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -55,18 +63,16 @@ public class PlayerController : MonoBehaviour
  
     public void FixedUpdate()
     {
-        if (gameObject.tag == "Player1" && rb.velocity.magnitude>10)
-        {
-            Debug.Log(gameObject.name + rb.velocity.magnitude);
-        }
+        
         if(!isAttacking || attackAction.isComboAttack)
         {
             rb.velocity = new Vector2(move.x, move.y) * playerSpeed * Time.fixedDeltaTime;
         }
         if (isAttacking && !attackAction.hasAttacked)
         {
-            if (comboPoints == maxComboPoints)
+            if (comboTracker.GetComponent<ComboManager>().combo == comboTracker.GetComponent<ComboManager>().maxCombo)
             {
+                comboTracker.GetComponent<ComboManager>().Empty();
                 StartCoroutine(attackAction.ComboAttack());
             }
             else
@@ -76,9 +82,9 @@ public class PlayerController : MonoBehaviour
             
         }
 
-        if (rb.velocity != Vector2.zero && !attackAction.isComboAttack)
+        if (move != Vector2.zero /*&& !attackAction.isComboAttack*/)
         {
-            Debug.Log("Rotating");
+           
             Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, move);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed);
         }
@@ -87,6 +93,7 @@ public class PlayerController : MonoBehaviour
     }
     public void TakeDamage(int dmg)
     {
+        Debug.Log("takingDamage;");
         health -= dmg;
         healthBar.fillAmount = health / maxHealth;
         if(health <= 0)
@@ -95,8 +102,5 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    public void AddComboPoint()
-    {
-        if(comboPoints < maxComboPoints) { comboPoints++; }
-    }
+
 }

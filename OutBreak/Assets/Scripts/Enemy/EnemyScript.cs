@@ -111,7 +111,7 @@ public class EnemyScript : MonoBehaviour
                 closestIndex = i;
             }
         }
-
+        Debug.Log("Dealing Damage");
         playersInRange[closestIndex].TakeDamage(attackDamage);
         latestHit = Time.time;
     }
