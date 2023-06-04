@@ -12,11 +12,15 @@ public class BulletScript : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().velocity = transform.up * bulletSpeed * Time.fixedDeltaTime;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.tag == "Zombie")
+        if (collision.gameObject.tag == "Zombie")
         {
             //zombie take dmg
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.tag == "Obstacle")
+        {
             Destroy(gameObject);
         }
     }
