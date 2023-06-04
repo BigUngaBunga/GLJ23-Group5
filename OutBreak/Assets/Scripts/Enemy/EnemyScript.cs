@@ -64,7 +64,7 @@ public class EnemyScript : MonoBehaviour
 
     private void Die()
     {
-        GameObject.Find("LevelManager").GetComponent<LevelManager>().RemoveTime(0.5f);
+        GameObject.Find("LevelManager").GetComponent<LevelManager>().RemoveTime(1);
         gameObject.SetActive(false);
         CancelInvoke();
 

@@ -27,11 +27,15 @@ public class MeleeWeaponScript : MonoBehaviour
                     //enemies hit with comboattack
                 }
             }
-            else if (playerController.rb.velocity.magnitude > 20)
+            else if (playerController.rb.velocity.magnitude > 12)
             {
                 if (collision.tag == "Zombie")
                 {
+<<<<<<< Updated upstream
                     playerController.comboTracker.GetComponent<ComboManager>().AddCombo(1);
+=======
+                    playerController.comboTracker.GetComponent<ComboManager>().AddCombo(8);
+>>>>>>> Stashed changes
 
                     collision.GetComponent<EnemyScript>().TakeDamage(damage);
                 }
