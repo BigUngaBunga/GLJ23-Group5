@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2493692771229710733}
   - component: {fileID: 5431094958891372207}
   - component: {fileID: 9206096229489710746}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BigEnemy
   m_TagString: Zombie
   m_Icon: {fileID: 0}
@@ -141,4 +141,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 0.65
