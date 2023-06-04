@@ -71,8 +71,8 @@ public class PlayerController : MonoBehaviour
     }
     public void TakeDamage(int dmg)
     {
-        health -= dmg;
-        healthBar.fillAmount = health / maxHealth;
+        //health -= dmg;
+        //healthBar.fillAmount = health / maxHealth;
         if(health <= 0)
         {
             //death
