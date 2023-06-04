@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class ComboManager : MonoBehaviour
 {
-    public static ComboManager instance;
+   
     public bool isFull;
     public bool isEmpty;
-    public float combo = 100f;
-    float maxCombo = 100f;
+    public float combo = 50f;
+    public float maxCombo = 100f;
     float timeSinceGainCombo;
     Color baseColor;
     [SerializeField] float comboDecreaseCooldown;
@@ -19,15 +19,13 @@ public class ComboManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
-
+     
         baseColor = comboBar.color;
     }
 
-    public void AddCombo(float someCombo)
+    public void AddCombo()
     {
-        combo += someCombo;
+        combo += 1;
         timeSinceGainCombo = 0;
         isEmpty = false;
 
