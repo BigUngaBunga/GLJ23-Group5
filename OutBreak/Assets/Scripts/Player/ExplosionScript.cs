@@ -16,6 +16,7 @@ public class ExplosionScript : MonoBehaviour
         if (collision.tag == "Zombie")
         {           
             collision.GetComponent<EnemyScript>().TakeDamage(explosionDamage,Vector2.zero);
+            LevelManager.levelScore += 1;
             //zombie take dmg
             Destroy(this);
         }
