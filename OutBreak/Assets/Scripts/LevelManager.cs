@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] float levelDuration = 60;
-    [SerializeField] int scoreFactor = 5;
+    private int scoreFactor = 5;
     private float startTime;
     private float removedTime = 0;
     private GameTimer timer;
@@ -36,14 +36,12 @@ public class LevelManager : MonoBehaviour
         levelScore += (int)(levelDuration - ElapsedTime) * scoreFactor;
         HighScoreList.score += levelScore;
         loadingLevel = true;
-        LoadNextLevel();
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex +1);
     }
-
-    private void LoadNextLevel() => SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
 
     private float TimeLeft()
     {
         return levelDuration - ElapsedTime;
     }
-
+ 
 }
