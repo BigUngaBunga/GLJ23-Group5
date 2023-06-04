@@ -27,15 +27,24 @@ public class EnemyScript : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         latestHit= Time.time;
         playersInRange= new List<PlayerController>();
+
+
+        targets = new List<Transform>();
+
+        GameObject playerOne = GameObject.FindGameObjectWithTag("Player1");
+        GameObject playerTwo = GameObject.FindGameObjectWithTag("Player2");
+        if (playerOne != null)
+            targets.Add(playerOne.transform);
+
+        if (playerTwo != null)
+            targets.Add(playerTwo.transform);
+
     }
 
-    public void Instantiate(Vector3 startPos, List<Transform> targets)
+    public void Initiate(Vector3 startPos)
     {
-        transform.position = startPos;
-        this.targets = targets;
-
-        currentHealth = originalHealth;
-        gameObject.SetActive(true);
+        transform.position = startPos;        
+        currentHealth = originalHealth;       
     }
 
     public void TakeDamage(int damage) => TakeDamage(damage, Vector2.zero);
@@ -48,7 +57,8 @@ public class EnemyScript : MonoBehaviour
 
     private void Die()
     {
-        gameObject.SetActive(false);
+        Destroy(this);
+
         CancelInvoke();
 
     }
@@ -65,13 +75,15 @@ public class EnemyScript : MonoBehaviour
 
     private void UpdateClosestPlayer()
     {
+        if (targets == null)
+            return;
         if (targets.Count > 1)
         {
             float closestRange = float.MaxValue;
             int index = 0;
-            for (int i = 0; i < playersInRange.Count; i++)
+            for (int i = 0; i < targets.Count; i++)
             {
-                float range = Vector3.Distance(playersInRange[i].transform.position, transform.position);
+                float range = Vector3.Distance(targets[i].transform.position, transform.position);
                 if (range < closestRange)
                 {
                     closestRange = range;
@@ -97,7 +109,7 @@ public class EnemyScript : MonoBehaviour
                 closestIndex = i;
             }
         }
-
+        Debug.Log("Dealing Damage");
         playersInRange[closestIndex].TakeDamage(attackDamage);
         latestHit = Time.time;
     }
@@ -105,10 +117,13 @@ public class EnemyScript : MonoBehaviour
     private void FixedUpdate()
     {
         rigidbody.velocity = direction * speed * Time.fixedDeltaTime;
+
         if (direction != Vector2.zero)
         {
-            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 5);
+            //Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 5);
+
+            transform.up = direction;
         }
     }
 

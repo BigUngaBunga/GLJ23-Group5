@@ -13,7 +13,7 @@ public class PlayerSpawner : MonoBehaviour
      
         PlayerInput player1 = PlayerInput.Instantiate(Player1Prefab, controlScheme: "player1", pairWithDevice: Keyboard.current);
         player1.transform.position = Player1Spawner.transform.position;
-        if (PlayerPrefs.GetInt("Players") == 2) { 
+        if (PlayerPrefs.GetInt("Players") > 1) { 
             PlayerInput player2 = PlayerInput.Instantiate(Player2Prefab, controlScheme: "Player2", pairWithDevice: Keyboard.current);
             player2.transform.position=Player2Spawner.transform.position;
         }

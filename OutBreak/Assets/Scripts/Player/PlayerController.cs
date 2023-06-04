@@ -7,8 +7,11 @@ public class PlayerController : MonoBehaviour
     public Vector2 move;
     [SerializeField] int maxHealth;
     int health;
-    [SerializeField] Camera followCam;
+   
+    [SerializeField] public Camera followCam;
+    [SerializeField] public TargetIndicator targetIndicator;
     [SerializeField] float playerSpeed;
+    [SerializeField] float rotationSpeed;
     public  Rigidbody2D rb;
     public  bool isAttacking;
     [SerializeField] public float attackDelay;
@@ -16,11 +19,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public float attackSpeed;
     [SerializeField] PlayersAction attackAction;
     [SerializeField] Image healthBar;
+    [SerializeField] public Image comboTracker;
+
     // Start is called before the first frame update
     void Start()
     {
         rb= GetComponent<Rigidbody2D>();
         health = maxHealth;
+        if(gameObject.name == "Player1(Clone)")
+        {
+            healthBar = GameObject.FindGameObjectWithTag("HP1").GetComponent<Image>();
+            comboTracker = GameObject.FindGameObjectWithTag("Combo1").GetComponent<Image>();
+        }
+        else if (gameObject.name == "Player2(Clone)")
+        {
+            healthBar = GameObject.FindGameObjectWithTag("HP2").GetComponent<Image>();
+            comboTracker = GameObject.FindGameObjectWithTag("Combo2").GetComponent<Image>();
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -32,11 +47,10 @@ public class PlayerController : MonoBehaviour
     public void OnPlayerAttack(InputAction.CallbackContext context)
     {
         if(context.started) {
-            Debug.Log("StartShooting");
             isAttacking = true;
 
         }
-         if (context.canceled && attackAction.hasAttacked)
+        if (context.canceled && attackAction.hasAttacked && !attackAction.isComboAttack)
         {
             Debug.Log("StopAttack");
             isAttacking = false;
@@ -49,25 +63,37 @@ public class PlayerController : MonoBehaviour
  
     public void FixedUpdate()
     {
-        if(!isAttacking)
+        
+        if(!isAttacking || attackAction.isComboAttack)
         {
             rb.velocity = new Vector2(move.x, move.y) * playerSpeed * Time.fixedDeltaTime;
         }
         if (isAttacking && !attackAction.hasAttacked)
         {
-          
-            StartCoroutine(attackAction.Attack(attackSpeed));
+            if (comboTracker.GetComponent<ComboManager>().combo == comboTracker.GetComponent<ComboManager>().maxCombo)
+            {
+                comboTracker.GetComponent<ComboManager>().Empty();
+                StartCoroutine(attackAction.ComboAttack());
+            }
+            else
+            {
+                StartCoroutine(attackAction.Attack(attackSpeed));
+            }
+            
         }
 
-        if (move != Vector2.zero)
+        if (move != Vector2.zero /*&& !attackAction.isComboAttack*/)
         {
+           
             Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, move);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 5);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed);
         }
-        followCam.transform.localRotation = Quaternion.Inverse(gameObject.transform.rotation);  
+        followCam.transform.localRotation = Quaternion.Inverse(gameObject.transform.rotation);
+        targetIndicator.transform.localRotation = Quaternion.Inverse(gameObject.transform.rotation);
     }
     public void TakeDamage(int dmg)
     {
+        Debug.Log("takingDamage;");
         health -= dmg;
         healthBar.fillAmount = health / maxHealth;
         if(health <= 0)
@@ -76,4 +102,5 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
 }

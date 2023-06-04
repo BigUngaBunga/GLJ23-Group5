@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
 
-public class Timer : MonoBehaviour
+public class GameTimer : MonoBehaviour
 {
     [Min(0)]
     [SerializeField] int includedMilliseconds = 1;
