@@ -14,8 +14,9 @@ public class PlayerMelee : PlayersAction
     public override IEnumerator Attack(float attackSpeed)
     {
         if (canAttack)
-        {                  
-            controller.rb.velocity*=4.5f;  
+        {
+            controller.rb.AddForce(controller.rb.velocity/1.6f,ForceMode2D.Impulse);
+            yield return new WaitForSeconds(attackSpeed);
             controller.isAttacking = false;
             hasAttacked= true;
             StopCoroutine(Attack(attackSpeed));
