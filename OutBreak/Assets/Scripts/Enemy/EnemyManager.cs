@@ -8,7 +8,7 @@ public class EnemyManager : MonoBehaviour
 {
 
     [SerializeField] List<Transform> spawnLocations;
-    private List<Transform> players;
+    public  List<Transform> players;
 
     [SerializeField] float timeBetweenSpawns;
     float timer;

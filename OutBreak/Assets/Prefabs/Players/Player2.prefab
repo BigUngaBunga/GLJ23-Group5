@@ -378,7 +378,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
+  bloodSplatter: {fileID: 8524837901036097826, guid: 26d926ca25ac8694eb6b906d992bd4b1, type: 3}
   maxHealth: 100
+  health: 0
   corpse: {fileID: 7759049795535867885, guid: 088239182336a364b9f2aa369d818804, type: 3}
   followCam: {fileID: 1518980450144646514}
   targetIndicator: {fileID: 5340808159972689282}

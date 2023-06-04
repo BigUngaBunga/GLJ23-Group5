@@ -19,6 +19,7 @@ public class EnemyScript : MonoBehaviour
     private float latestHit;
     private int currentHealth;
     bool isTakingDamage;
+    [SerializeField] GameObject bloodSplatter;
 
     private bool CanHit => latestHit + attackSpeed < Time.time;
 
@@ -43,7 +44,8 @@ public class EnemyScript : MonoBehaviour
     public void TakeDamage(int damage, Vector2 knockbackForce)
     {
         isTakingDamage= true;
-        
+        Instantiate(bloodSplatter, transform.position, Quaternion.identity);
+
         currentHealth -= damage;
         if (gameObject.activeInHierarchy == true)
         {
@@ -133,15 +135,23 @@ public class EnemyScript : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    
+    public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("Player1") || collision.gameObject.tag.Equals("Player2"))
-            playersInRange.Add(collision.GetComponent<PlayerController>());
-
+        if (collision.gameObject.name == "Player1(Clone)" || collision.gameObject.name == "Player2(Clone)")
+        {
+            Debug.Log("found Play");
+            playersInRange.Add(collision.gameObject.GetComponent<PlayerController>());
+        }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+
+    public void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("Player1") || collision.gameObject.tag.Equals("Player2") && playersInRange.Contains(collision.GetComponent<PlayerController>()))
-            playersInRange.Remove(collision.GetComponent<PlayerController>());
+
+        if (collision.gameObject.name == "Player1(Clone)" || collision.gameObject.name == "Player2(Clone)")
+        {
+            Debug.Log("found Play");
+            playersInRange.Remove(collision.gameObject.GetComponent<PlayerController>());
+        }
     }
 }
