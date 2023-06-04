@@ -23,9 +23,9 @@ public class ComboManager : MonoBehaviour
         baseColor = comboBar.color;
     }
 
-    public void AddCombo(int comboPoints)
+    public void AddCombo()
     {
-        combo += comboPoints;
+        combo += 1;
         timeSinceGainCombo = 0;
         isEmpty = false;
 

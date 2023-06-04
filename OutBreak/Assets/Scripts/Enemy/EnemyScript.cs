@@ -18,8 +18,6 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private int attackDamage = 1;
     private float latestHit;
     private int currentHealth;
-    bool isTakingDamage;
-    [SerializeField] GameObject bloodSplatter;
 
     private bool CanHit => latestHit + attackSpeed < Time.time;
 
@@ -29,43 +27,38 @@ public class EnemyScript : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         latestHit= Time.time;
         playersInRange= new List<PlayerController>();
+
+
+        targets = new List<Transform>();
+
+        GameObject playerOne = GameObject.FindGameObjectWithTag("Player1");
+        GameObject playerTwo = GameObject.FindGameObjectWithTag("Player2");
+        if (playerOne != null)
+            targets.Add(playerOne.transform);
+
+        if (playerTwo != null)
+            targets.Add(playerTwo.transform);
+
     }
 
-    public void Instantiate(Vector3 startPos, List<Transform> targets)
+    public void Initiate(Vector3 startPos)
     {
-        transform.position = startPos;
-        this.targets = targets;
-
-        currentHealth = originalHealth;
-        gameObject.SetActive(true);
+        transform.position = startPos;        
+        currentHealth = originalHealth;       
     }
 
     public void TakeDamage(int damage) => TakeDamage(damage, Vector2.zero);
     public void TakeDamage(int damage, Vector2 knockbackForce)
     {
-        isTakingDamage= true;
-        Instantiate(bloodSplatter, transform.position, Quaternion.identity);
-
-        currentHealth -= damage;
-        if (gameObject.activeInHierarchy == true)
-        {
-            StartCoroutine(KnockBack(knockbackForce));
-        }
         if ((currentHealth -= damage) <= 0)
             Die();
-       
     }
-    public IEnumerator KnockBack(Vector2 force)
-    {
-        rigidbody.AddForce(force, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(0.5f);
-        isTakingDamage= false;
-    }
+
 
     private void Die()
     {
-        GameObject.Find("LevelManager").GetComponent<LevelManager>().RemoveTime(0.5f);
-        gameObject.SetActive(false);
+        Destroy(this);
+
         CancelInvoke();
 
     }
@@ -75,21 +68,22 @@ public class EnemyScript : MonoBehaviour
         InvokeRepeating(nameof(UpdateClosestPlayer), 0f, 1f);
 
         direction = (targets[closestIndex].position - transform.position).normalized;
-        
+
         if (playersInRange.Count > 0 && CanHit)
             AttackClosest();
     }
 
     private void UpdateClosestPlayer()
     {
-        
+        if (targets == null)
+            return;
         if (targets.Count > 1)
         {
             float closestRange = float.MaxValue;
             int index = 0;
-            for (int i = 0; i < playersInRange.Count; i++)
+            for (int i = 0; i < targets.Count; i++)
             {
-                float range = Vector3.Distance(playersInRange[i].transform.position, transform.position);
+                float range = Vector3.Distance(targets[i].transform.position, transform.position);
                 if (range < closestRange)
                 {
                     closestRange = range;
@@ -104,7 +98,6 @@ public class EnemyScript : MonoBehaviour
 
     private void AttackClosest()
     {
-
         float closestRange = float.MaxValue;
         int closestIndex = 0;
         for (int i = 0; i < playersInRange.Count; i++)
@@ -116,42 +109,34 @@ public class EnemyScript : MonoBehaviour
                 closestIndex = i;
             }
         }
-
+        Debug.Log("Dealing Damage");
         playersInRange[closestIndex].TakeDamage(attackDamage);
         latestHit = Time.time;
     }
 
     private void FixedUpdate()
     {
-        if (!isTakingDamage)
-        {
-            rigidbody.velocity = direction * speed * Time.fixedDeltaTime;
-        }
+        rigidbody.velocity = direction * speed * Time.fixedDeltaTime;
+
         if (direction != Vector2.zero)
         {
-            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 5);
+            //Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 5);
+
+            transform.up = direction;
         }
     }
 
 
-    
-    public void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player1(Clone)" || collision.gameObject.name == "Player2(Clone)")
-        {
-            Debug.Log("found Play");
-            playersInRange.Add(collision.gameObject.GetComponent<PlayerController>());
-        }
+        if (collision.CompareTag("Player1") || collision.CompareTag("Player2"))
+            playersInRange.Add(collision.GetComponent<PlayerController>());
+
     }
-
-    public void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-
-        if (collision.gameObject.name == "Player1(Clone)" || collision.gameObject.name == "Player2(Clone)")
-        {
-            Debug.Log("found Play");
-            playersInRange.Remove(collision.gameObject.GetComponent<PlayerController>());
-        }
+        if (collision.gameObject.tag.Equals("Player1") || collision.gameObject.tag.Equals("Player2") && playersInRange.Contains(collision.GetComponent<PlayerController>()))
+            playersInRange.Remove(collision.GetComponent<PlayerController>());
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -6,10 +5,9 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public Vector2 move;
-    [SerializeField] GameObject bloodSplatter;
     [SerializeField] int maxHealth;
-    [SerializeField] int health;
-    [SerializeField] GameObject corpse;
+    int health;
+   
     [SerializeField] public Camera followCam;
     [SerializeField] public TargetIndicator targetIndicator;
     [SerializeField] float playerSpeed;
@@ -31,7 +29,6 @@ public class PlayerController : MonoBehaviour
         if(gameObject.name == "Player1(Clone)")
         {
             healthBar = GameObject.FindGameObjectWithTag("HP1").GetComponent<Image>();
-            
             comboTracker = GameObject.FindGameObjectWithTag("Combo1").GetComponent<Image>();
         }
         else if (gameObject.name == "Player2(Clone)")
@@ -97,22 +94,11 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         Debug.Log("takingDamage;");
-        Instantiate(bloodSplatter,transform.position,Quaternion.identity);
         health -= dmg;
-        healthBar.fillAmount = (float)Decimal.Divide(health, maxHealth);
+        healthBar.fillAmount = health / maxHealth;
         if(health <= 0)
         {
-            EnemyManager.SharedInstance.players.Remove(transform);
-            Debug.Log("dead");
-            Instantiate(corpse, transform.position, Quaternion.identity);
-            Destroy(gameObject.GetComponent<PlayerInput>());
-            Destroy(gameObject.GetComponent<Rigidbody2D>());
-     
-            Destroy(gameObject.GetComponent<CircleCollider2D>());
-            Destroy(gameObject.GetComponent<SpriteRenderer>());
-            targetIndicator.enabled= false;
-            
-            Destroy(this);
+            //death
         }
 
     }

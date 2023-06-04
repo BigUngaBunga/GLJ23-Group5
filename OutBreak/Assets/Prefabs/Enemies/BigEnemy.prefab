@@ -105,7 +105,6 @@ MonoBehaviour:
   originalHealth: 30
   attackSpeed: 0.5
   attackDamage: 1
-  bloodSplatter: {fileID: 7084636829398823342, guid: 56d1e273a0db59241af3568f33d5874d, type: 3}
 --- !u!50 &5431094958891372207
 Rigidbody2D:
   serializedVersion: 4

@@ -17,7 +17,7 @@ public class BulletScript : MonoBehaviour
     {
         if (collision.tag == "Zombie")
         {
-            GameObject.FindGameObjectWithTag("Player2").GetComponent<PlayerController>().comboTracker.GetComponent<ComboManager>().AddCombo(2);
+            GameObject.FindGameObjectWithTag("Player2").GetComponent<PlayerController>().comboTracker.GetComponent<ComboManager>().AddCombo();
             Vector2 forceDir = collision.transform.position-transform.position;
             Debug.Log(forceDir);
         
