@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource effectSource;
     [SerializeField] AudioSource voiceSource;
+    [SerializeField] AudioClip jingle;
     [SerializeField] AudioClip[] allMusic;
     [SerializeField] AudioClip[] storeVoicelines;
     [SerializeField] AudioClip[] parkingVoicelines;
@@ -29,6 +30,7 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        PlayJingle();
         musicSource.loop = true;
         //StartLevel(1);
 
@@ -59,6 +61,11 @@ public class SoundManager : MonoBehaviour
     public void PlaySound(AudioClip clip)
     {
         effectSource.PlayOneShot(clip);
+    }
+
+    public void PlayJingle()
+    {
+        PlaySound(jingle);
     }
 
     public void PlayMusic(int index)
