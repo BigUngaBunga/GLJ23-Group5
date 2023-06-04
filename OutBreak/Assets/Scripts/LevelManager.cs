@@ -4,14 +4,18 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] float levelDuration = 60;
+    [SerializeField] int scoreFactor = 5;
     private float startTime;
     private float removedTime = 0;
     private GameTimer timer;
     private bool loadingLevel = false;
+    private float ElapsedTime => Time.time - startTime + removedTime;
+    public static int levelScore;
     public void RemoveTime(int time) => removedTime -= time;
     
     private void Start()
     {
+        levelScore = 0;
         timer = FindObjectOfType<GameTimer>();
         startTime = Time.time;
     }
@@ -27,7 +31,8 @@ public class LevelManager : MonoBehaviour
 
     private void EndLevel()
     {
-        //TODO show score for the level
+        levelScore += (int)(levelDuration - ElapsedTime) * scoreFactor;
+        HighScoreList.score += levelScore;
         loadingLevel = true;
         LoadNextLevel();
     }
@@ -36,8 +41,7 @@ public class LevelManager : MonoBehaviour
 
     private float TimeLeft()
     {
-        float elapsedTime = Time.time - startTime + removedTime;
-        return levelDuration - elapsedTime;
+        return levelDuration - ElapsedTime;
     }
 
 }
